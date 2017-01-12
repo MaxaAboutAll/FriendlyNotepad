@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "494273781014",
+    "firebase_url": "https://friendlynotepad-1cba1.firebaseio.com",
+    "project_id": "friendlynotepad-1cba1",
+    "storage_bucket": "friendlynotepad-1cba1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494273781014:android:d0d18c0a77d77e6c",
+        "android_client_info": {
+          "package_name": "com.app.scope.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494273781014-8fv25i1klsl1sirvf0inponvclras4dj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.scope.myapplication",
+            "certificate_hash": "054BA9F2EC8CB0B2D1438C80CC8A770DED560C80"
+          }
+        },
+        {
+          "client_id": "494273781014-5aogsn6sqp51vvdr4ob7rnnto958uedg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQB4ui5MwhSH3PFTJh-Qwo272XGiOp_bs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494273781014-5aogsn6sqp51vvdr4ob7rnnto958uedg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
