@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
@@ -8,25 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.app.scope.myapplication.LoginActivity">
-
-    <Button
-        android:text="Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
-        android:id="@+id/RegBtn" />
-
-    <Button
-        android:text="Login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/LoginBtn"
-        android:layout_above="@+id/RegBtn"
-        android:layout_alignStart="@+id/RegBtn"
-        android:layout_marginBottom="29dp" />
+    android:theme="@style/AppTheme"
+    tools:context="com.app.scope.myapplication.LoginActivity"
+    android:background="@color/background">
 
     <EditText
         android:layout_width="wrap_content"
@@ -39,14 +24,37 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="47dp" />
 
+    <Button
+        android:text="Register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/RegBtn"
+        android:theme="@style/MyButton"
+        android:elevation="8dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/PasswordEditText" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LoginBtn"
+        android:theme="@style/MyButton"
+        android:elevation="8dp"
+        android:layout_alignBaseline="@+id/RegBtn"
+        android:layout_alignBottom="@+id/RegBtn"
+        android:layout_alignStart="@+id/PasswordEditText" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_above="@+id/PasswordEditText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="38dp"
         android:id="@+id/LoginEditText"
-        android:hint="Email" />
+        android:hint="Email"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/PasswordEditText"
+        android:elevation="8dp"
+        />
 </RelativeLayout>

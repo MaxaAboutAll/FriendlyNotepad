@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimary">#651FFF</item>
         <!-- Light Indigo -->
         <item name="colorPrimaryDark">#3949AB</item>
         <!-- Dark Indigo -->
@@ -12,6 +12,10 @@
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+    <style name="MyButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/indigo</item>
+        <item name="colorButtonNormal">@color/blue</item>
     </style>
 
 </resources>
