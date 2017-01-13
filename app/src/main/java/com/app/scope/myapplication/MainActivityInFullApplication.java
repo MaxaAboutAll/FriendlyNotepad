@@ -36,9 +36,6 @@ public class MainActivityInFullApplication extends AppCompatActivity {
                 finish();
             }
         });
-        Intent intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
 }
