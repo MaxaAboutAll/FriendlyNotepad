@@ -5,4 +5,5 @@
     <string name="MyContacts">My contacts</string>
     <string name="AddMember">Add member</string>
     <string name="FindPeople">Find people</string>
+    <string name="LogOut">Log Out</string>
 </resources>

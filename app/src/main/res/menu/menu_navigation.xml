@@ -15,5 +15,10 @@
             android:tint="@color/button_grey"
             android:title="@string/FindPeople"
             />
+        <item
+            android:tint="@color/button_grey"
+            android:title="@string/LogOut"
+            android:id="@+id/LogOut"
+            />
     </group>
 </menu>

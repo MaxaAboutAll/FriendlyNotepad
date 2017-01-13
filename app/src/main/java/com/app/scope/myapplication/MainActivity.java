@@ -9,9 +9,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -26,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         //-------Set Navigation Menu----------------------------
         // Create Navigation drawer and inflate layout
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(0).setChecked(false);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         // Adding menu icon to Toolbar
@@ -41,12 +52,19 @@ public class MainActivity extends AppCompatActivity {
                     // This method will trigger on item Click of navigation menu
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        int id = menuItem.getItemId();
+                        switch (id){ // проверка нажатия и распределение действий
+                            case R.id.LogOut:
+                                FirebaseAuth.getInstance().signOut();
+                        }
                         // Set item in checked state
                         menuItem.setChecked(true);
                         // Closing drawer on item click
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
+
+
                 });
         //-------Set FAB-------------
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
