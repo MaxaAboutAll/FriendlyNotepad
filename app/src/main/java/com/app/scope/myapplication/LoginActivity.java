@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 {
                     Toast.makeText(LoginActivity.this, "Регистрация успешна", Toast.LENGTH_SHORT).show();
                     String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//vzyat' id polzovatelya
-                    DatabaseReference myRef = database.getReference(id);//Otpravit' v bazu id
-                    myRef.setValue("online");//Otpravit' status
+                    DatabaseReference myRef = database.getReference(id);//Отправить в базу id
+                    myRef.setValue("online");//Отправить в базу статус
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();

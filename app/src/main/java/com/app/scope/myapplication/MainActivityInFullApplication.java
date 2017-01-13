@@ -26,6 +26,7 @@ public class MainActivityInFullApplication extends AppCompatActivity {
         isOnline(this);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
+            //Проверка на зарегистрированность
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Intent intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
                 startActivity(intent);
@@ -42,6 +43,7 @@ public class MainActivityInFullApplication extends AppCompatActivity {
         });
 
     }
+    //Проверка на подкючение к интернету
     public boolean isOnline(Context context)
     {
         ConnectivityManager cm =
