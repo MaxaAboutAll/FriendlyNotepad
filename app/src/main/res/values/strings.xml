@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Friendly Notepad</string>
     <string name="action_settings">Settings</string>
+    <string name="Notes">Notes</string>
+    <string name="MyContacts">My contacts</string>
+    <string name="AddMember">Add member</string>
+    <string name="FindPeople">Find people</string>
 </resources>

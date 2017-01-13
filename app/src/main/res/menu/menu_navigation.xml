@@ -4,15 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:tint="@color/button_grey"
-            android:title="Notes" />
+            android:title="@string/Notes" />
         <item
             android:tint="@color/button_grey"
-            android:title="My contacts" />
+            android:title="@string/MyContacts" />
         <item
             android:tint="@color/button_grey"
-            android:title="Add member" />
+            android:title="@string/AddMember" />
         <item
             android:tint="@color/button_grey"
-            android:title="Find people" />
+            android:title="@string/FindPeople"
+            />
     </group>
 </menu>
