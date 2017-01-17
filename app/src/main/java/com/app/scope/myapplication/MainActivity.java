@@ -3,7 +3,11 @@ package com.app.scope.myapplication;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
 
@@ -39,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
+        //-------Set ViewPager
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        //----------------------------
         // Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
@@ -54,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         int id = menuItem.getItemId();
                         switch (id){ // проверка нажатия и распределение действий
-                            case R.id.LogOut:
+                            case R.id.LogOut: //кнопка логаут
                                 FirebaseAuth.getInstance().signOut();
                         }
                         // Set item in checked state
@@ -66,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 });
+
         //-------Set FAB-------------
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +88,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new ListContentFragment(), "List");
+        viewPager.setAdapter(adapter);
+    }
 
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public Adapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

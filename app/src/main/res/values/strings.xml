@@ -6,4 +6,16 @@
     <string name="AddMember">Add member</string>
     <string name="FindPeople">Find people</string>
     <string name="LogOut">Log Out</string>
+    <string name="Lorem">Lorem ipsum dolor sitamet,
+        consectetur adipiscing elit. Fusce pretium,
+        dui nec feugiat laoreet, nibh erat tempus neque,
+        id bibendum ligula velit vel libero. Maecenas in
+        erat et magna vehicula lobortis in id ipsum. Proin
+        eget blandit tellus. Pellentesque at libero sit amet
+        mi porttitor mattis quis non massa. Suspendisse et
+        odio diam. Aliquam bibendum dignissim consequat.
+        Vestibulum ullamcorper vitae dui at pharetra.
+        Pellentesque habitant morbi tristique senectus
+        et netus et malesuada fames ac turpis egestas.
+        Proin sed neque ac ex venenatis feugiat.</string>
 </resources>
