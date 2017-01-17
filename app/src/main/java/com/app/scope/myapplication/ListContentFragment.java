@@ -68,7 +68,7 @@ public class ListContentFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-           holder.name.setText("Lorem ipsum");
+            holder.name.setText("Lorem ipsum");
             holder.description.setText(R.string.Lorem);
         }
 
