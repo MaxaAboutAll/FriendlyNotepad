@@ -1,5 +1,6 @@
 package com.app.scope.myapplication;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);//Установка картинки гамбургера
             supportActionBar.setDisplayHomeAsUpEnabled(true);//Возварат на уровень выше
         }
-        
+
         // Set behavior of Navigation drawer
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                         switch (id){ // проверка нажатия и распределение действий
                             case R.id.LogOut: //кнопка логаут
                                 FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                                startActivity(intent);
+                                finish();
                         }
                         // Set item in checked state
                         menuItem.setChecked(true);
