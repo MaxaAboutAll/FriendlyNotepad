@@ -6,7 +6,23 @@ package com.app.scope.myapplication;
 
 public class User {
 
-    public void login(){
+    String login;
+    String password;
+
+
+    public User(){
+
+    }
+
+    public void signin(){
+
+    }
+
+    public void registration(){
+
+    }
+
+    public void callback(){
 
     }
 }
