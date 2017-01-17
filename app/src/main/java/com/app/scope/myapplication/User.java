@@ -5,4 +5,8 @@ package com.app.scope.myapplication;
  */
 
 public class User {
+
+    public void login(){
+
+    }
 }
