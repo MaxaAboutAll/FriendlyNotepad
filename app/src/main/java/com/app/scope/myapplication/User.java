@@ -6,14 +6,10 @@ package com.app.scope.myapplication;
 
 public class User {
 
-    String login;
-    String password;
 
-
-    public User(){
+    User(String login, String password){
 
     }
-
     public void signin(){
 
     }

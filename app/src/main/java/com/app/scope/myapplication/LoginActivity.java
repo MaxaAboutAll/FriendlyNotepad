@@ -55,6 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         ETemail = (EditText) findViewById(R.id.LoginEditText);
         ETpassword = (EditText) findViewById(R.id.PasswordEditText);
+        LoginActivity login = new LoginActivity();
+        User user = new User(ETemail.getText().toString(),ETpassword.getText().toString());
 
         findViewById(R.id.LoginBtn).setOnClickListener(this);
         findViewById(R.id.RegBtn).setOnClickListener(this);
