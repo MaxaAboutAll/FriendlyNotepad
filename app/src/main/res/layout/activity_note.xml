@@ -23,17 +23,27 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <EditText
-        android:id="@+id/editTextNote"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:inputType="textMultiLine"
-        android:ems="10"
-        android:gravity="top|left"
-        android:scrollbars="vertical"
-        android:theme="@style/MyEditText"
-        android:maxLines="100"
-        />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:gravity="top|left"
+            android:maxLines="100" />
+
+
+    </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
