@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ETemail = (EditText) findViewById(R.id.LoginEditText);
         ETpassword = (EditText) findViewById(R.id.PasswordEditText);
         LoginActivity login = new LoginActivity();
-        User user = new User(ETemail.getText().toString(),ETpassword.getText().toString());
+
 
         findViewById(R.id.LoginBtn).setOnClickListener(this);
         findViewById(R.id.RegBtn).setOnClickListener(this);
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+
         if(TextUtils.isEmpty(ETemail.getText().toString())||TextUtils.isEmpty(ETemail.getText().toString())) {
             Snackbar.make(findViewById(R.id.LoginBtn), "Поля пусты", Snackbar.LENGTH_SHORT).show();
             Snackbar.make(findViewById(R.id.RegBtn), "Поля пусты", Snackbar.LENGTH_SHORT).show();
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
+
                 }else
                     Snackbar.make(findViewById(R.id.LoginBtn), "Авторизация провалена", Snackbar.LENGTH_SHORT).show();
             }

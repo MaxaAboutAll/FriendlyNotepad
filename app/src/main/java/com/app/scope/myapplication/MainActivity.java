@@ -87,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Make New Note",
-                        Snackbar.LENGTH_LONG).show();
+               /* Snackbar.make(v, "Make New Note",
+                        Snackbar.LENGTH_LONG).show();*/
+                Intent intent = new Intent(MainActivity.this,NoteActivity.class);
+                startActivity(intent);
             }
         });
     }

@@ -40,6 +40,7 @@ public class ListContentFragment extends Fragment {
             super(inflater.inflate(R.layout.item_list, parent, false));
             name = (TextView) itemView.findViewById(R.id.list_title);
             description = (TextView) itemView.findViewById(R.id.list_desc);
+            //----нажатие и переход к заметке
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
