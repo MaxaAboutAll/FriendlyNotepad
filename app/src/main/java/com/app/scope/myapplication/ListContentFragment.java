@@ -46,6 +46,7 @@ public class ListContentFragment extends Fragment {
                 public void onClick(View v) {
                     Context context = v.getContext();
                     Intent intent = new Intent(context, NoteActivity.class);
+
                     context.startActivity(intent);
 
                 }

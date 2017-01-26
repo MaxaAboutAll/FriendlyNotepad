@@ -83,6 +83,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Snackbar.make(findViewById(R.id.LoginBtn), "Автоизация успешна", Snackbar.LENGTH_SHORT).show();
+                    String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//vzyat' id polzovatelya
+                    DatabaseReference myRef = database.getReference();//Отправить в базу id
+                    myRef.child("users").child(id).child("status").setValue("online");//Отправить в базу статус
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -100,8 +103,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 {
                     Snackbar.make(findViewById(R.id.RegBtn), "Регистрация успешна", Snackbar.LENGTH_SHORT).show();
                     String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//vzyat' id polzovatelya
-                    DatabaseReference myRef = database.getReference(id);//Отправить в базу id
-                    myRef.setValue("online");//Отправить в базу статус
+                    DatabaseReference myRef = database.getReference();//Отправить в базу id
+                    myRef.child("users").child(id).child("status").setValue("online");
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();

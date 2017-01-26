@@ -32,6 +32,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
+    public int i=1;
+    String name="Note"+i+".txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +92,11 @@ public class MainActivity extends AppCompatActivity {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
                 Intent intent = new Intent(MainActivity.this,NoteActivity.class);
+                intent.putExtra("kukuska", name);
+                intent.putExtra("jajaja", "Note"+i);
+                i++;
                 startActivity(intent);
+
             }
         });
     }

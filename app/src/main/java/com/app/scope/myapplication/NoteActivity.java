@@ -1,5 +1,7 @@
 package com.app.scope.myapplication;
 
+import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +10,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,8 +20,12 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 public class NoteActivity extends AppCompatActivity {
-    private final static String FILENAME = "sample.txt"; // имя файла
+    //String FILENAME1 = (String)getIntent().getSerializableExtra("FILENAME");
+     // имя файла
     private EditText mEditText;
+    String FILENAME= "";
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +36,13 @@ public class NoteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_note);
         setSupportActionBar(toolbar);
         mEditText = (EditText) findViewById(R.id.input_name);
+        Intent intent = getIntent();
+        String FILENAME2 = intent.getStringExtra("jajaja");
+        String FILENAME1 = FILENAME2+".txt";
+        FILENAME=FILENAME1;
+        String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        DatabaseReference myRef = database.getReference();
+        myRef.child("users").child(id).child("NOTES").child(FILENAME2).setValue(FILENAME);
         saveFile(FILENAME);
         openFile(FILENAME);
     }
