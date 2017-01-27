@@ -1,6 +1,7 @@
 package com.app.scope.myapplication;
 
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -33,7 +34,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     public int i=1;
-    String name="Note"+i+".txt";
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
                 Intent intent = new Intent(MainActivity.this,NoteActivity.class);
-                intent.putExtra("kukuska", name);
-                intent.putExtra("jajaja", "Note"+i);
+                String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                myRef.child("users").child(id).child("Amount_notes").setValue(i);
+                intent.putExtra("FILENAME", "Note"+i);
                 i++;
                 startActivity(intent);
 

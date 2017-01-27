@@ -37,7 +37,7 @@ public class NoteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mEditText = (EditText) findViewById(R.id.input_name);
         Intent intent = getIntent();
-        String FILENAME2 = intent.getStringExtra("jajaja");
+        String FILENAME2 = intent.getStringExtra("FILENAME");
         String FILENAME1 = FILENAME2+".txt";
         FILENAME=FILENAME1;
         String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -46,6 +46,7 @@ public class NoteActivity extends AppCompatActivity {
         saveFile(FILENAME);
         openFile(FILENAME);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
