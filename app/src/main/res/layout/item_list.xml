@@ -21,7 +21,7 @@
         android:layout_below="@+id/list_title"
         android:layout_marginLeft="@dimen/md_keylines"
         android:ellipsize="end"
-        android:singleLine="true"
+        android:maxLines="2"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/list_body" />
 </RelativeLayout>

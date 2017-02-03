@@ -35,7 +35,7 @@ public class NoteActivity extends AppCompatActivity {
         //-------Set ToolBar------------------------------------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_note);
         setSupportActionBar(toolbar);
-        mEditText = (EditText) findViewById(R.id.input_name);
+        mEditText = (EditText) findViewById(R.id.input_note);
         Intent intent = getIntent();
         String FILENAME2 = intent.getStringExtra("FILENAME");
         String FILENAME1 = FILENAME2+".txt";
@@ -51,7 +51,7 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+        return true;    
     }
 //wtf??
     @Override
