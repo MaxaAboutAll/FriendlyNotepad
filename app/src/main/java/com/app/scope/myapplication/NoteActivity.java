@@ -5,6 +5,7 @@ import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -25,7 +26,12 @@ public class NoteActivity extends AppCompatActivity {
     private EditText mEditText;
     String FILENAME= "";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+    DatabaseReference noteCount;
     String FILENAME2;
+    String h,i="";
+    int Note;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +97,7 @@ public class NoteActivity extends AppCompatActivity {
                     "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
 
     // Метод для сохранения файла
     private void saveFile(String fileName) {

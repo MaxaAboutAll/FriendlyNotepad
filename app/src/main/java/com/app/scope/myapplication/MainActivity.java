@@ -101,33 +101,37 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
-               String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                noteCount = database.getReference().child("users").child(id).child("amountNotes_");
-                int schetchik;
-                String TAG="WTF";
-                i=noteCount.toString();
-                    char[] noteArray = i.toCharArray();
-                try {
-                    for (int j = 0; j < noteArray.length; j++) {
-                        if (noteArray[j] == '_') {
-                            schetchik = j;
-                            schetchik += 1;
-                            h = String.valueOf(noteArray[schetchik]);
-                            Note = Integer.parseInt(h);
-                            Note++;
-                        }
-                    }
-                }catch (Exception e){
-                    Log.e(TAG,"FUCKKKK");
-                }
-                myRef.child("users").child(id).child("amountNotes_").setValue(Note);
-
+                numberOfNotes();
                     Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                     intent.putExtra("FILENAME", "Note" + Note);
                     startActivity(intent);
 
             }
         });
+    }
+    private void numberOfNotes(){
+        String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        noteCount = database.getReference().child("users").child(id).child("amountNotes_");
+        int schetchik;
+        String TAG="WTF";
+        i=noteCount.toString();
+        char[] noteArray = i.toCharArray();
+        try {
+            for (int j = 0; j < noteArray.length; j++) {
+                if (noteArray[j] == '_') {
+                    schetchik = j;
+                    schetchik += 1;
+                    h = String.valueOf(noteArray[schetchik]);
+                    Note = Integer.parseInt(h);
+                    Note+=1;
+                    Log.e("NOTE:",h);
+                }
+            }
+            myRef.child("users").child(id).child("amountNotes_").setValue(Note);
+        }catch (Exception e){
+            Log.e(TAG,"FUCKKKK");
+        }
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
