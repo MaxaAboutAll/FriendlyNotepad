@@ -26,12 +26,7 @@ public class NoteActivity extends AppCompatActivity {
     private EditText mEditText;
     String FILENAME= "";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference();
-    DatabaseReference noteCount;
     String FILENAME2;
-    String h,i="";
-    int Note;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +92,6 @@ public class NoteActivity extends AppCompatActivity {
                     "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
         }
     }
-
 
     // Метод для сохранения файла
     private void saveFile(String fileName) {
