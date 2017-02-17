@@ -37,18 +37,18 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    String h;
-    int Note;
+    String id;
+    String value;
+    int testValue=0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    DatabaseReference noteCount;
-    String i="";
+    DatabaseReference noteCount= database.getReference("amountNotes_" );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         //-------Set ToolBar------------------------------------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,34 +103,38 @@ public class MainActivity extends AppCompatActivity {
                         Snackbar.LENGTH_LONG).show();*/
                 numberOfNotes();
                     Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                    intent.putExtra("FILENAME", "Note" + Note);
+                    intent.putExtra("FILENAME", "Note" + testValue);
                     startActivity(intent);
 
             }
         });
     }
     private void numberOfNotes(){
-        String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        noteCount = database.getReference().child("users").child(id).child("amountNotes_");
-        int schetchik;
-        String TAG="WTF";
-        i=noteCount.toString();
-        char[] noteArray = i.toCharArray();
+
+        id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         try {
-            for (int j = 0; j < noteArray.length; j++) {
-                if (noteArray[j] == '_') {
-                    schetchik = j;
-                    schetchik += 1;
-                    h = String.valueOf(noteArray[schetchik]);
-                    Note = Integer.parseInt(h);
-                    Note+=1;
-                    Log.e("NOTE:",h);
+            noteCount.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    value = dataSnapshot.getValue(String.class);
+                    Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
+                //    testValue=Integer.parseInt(value);
+                    testValue++;
+                    myRef.child("users").child(id).child("amountNotes_").setValue(testValue);
                 }
-            }
-            myRef.child("users").child(id).child("amountNotes_").setValue(Note);
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
+                }
+            });
         }catch (Exception e){
-            Log.e(TAG,"FUCKKKK");
+            Log.e("EBANAROT",e.toString());
         }
+
 
     }
 
