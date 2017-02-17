@@ -18,6 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivityInFullApplication extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +59,6 @@ public class MainActivityInFullApplication extends AppCompatActivity {
         finish();
         return false;
     }
+
 
 }

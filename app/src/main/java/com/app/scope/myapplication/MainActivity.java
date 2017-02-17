@@ -19,28 +19,36 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
-    public int i=1;
+    String h;
+    int Note;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
+    DatabaseReference noteCount;
+    String i="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         //-------Set ToolBar------------------------------------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         //-------Set ViewPager
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         //----------------------------
         // Adding menu icon to Toolbar
@@ -69,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         int id = menuItem.getItemId();
-                        switch (id){ // проверка нажатия и распределение действий
+                        switch (id) { // проверка нажатия и распределение действий
                             case R.id.LogOut: //кнопка логаут
                                 FirebaseAuth.getInstance().signOut();
-                                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
                         }
@@ -93,16 +101,35 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
-                Intent intent = new Intent(MainActivity.this,NoteActivity.class);
-                String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-                myRef.child("users").child(id).child("Amount_notes").setValue(i);
-                intent.putExtra("FILENAME", "Note"+i);
-                i++;
-                startActivity(intent);
+               String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+                noteCount = database.getReference().child("users").child(id).child("amountNotes_");
+                int schetchik;
+                String TAG="WTF";
+                i=noteCount.toString();
+                    char[] noteArray = i.toCharArray();
+                try {
+                    for (int j = 0; j < noteArray.length; j++) {
+                        if (noteArray[j] == '_') {
+                            schetchik = j;
+                            schetchik += 1;
+                            h = String.valueOf(noteArray[schetchik]);
+                            Note = Integer.parseInt(h);
+                            Note++;
+                        }
+                    }
+                }catch (Exception e){
+                    Log.e(TAG,"FUCKKKK");
+                }
+                myRef.child("users").child(id).child("amountNotes_").setValue(Note);
+
+                    Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                    intent.putExtra("FILENAME", "Note" + Note);
+                    startActivity(intent);
 
             }
         });
     }
+
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new ListContentFragment(), "List");
@@ -158,5 +185,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

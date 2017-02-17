@@ -25,7 +25,7 @@ public class NoteActivity extends AppCompatActivity {
     private EditText mEditText;
     String FILENAME= "";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-
+    String FILENAME2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +37,12 @@ public class NoteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mEditText = (EditText) findViewById(R.id.input_name);
         Intent intent = getIntent();
-        String FILENAME2 = intent.getStringExtra("FILENAME");
+        FILENAME2 = intent.getStringExtra("FILENAME");
         String FILENAME1 = FILENAME2+".txt";
         FILENAME=FILENAME1;
         String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         DatabaseReference myRef = database.getReference();
-        myRef.child("users").child(id).child("NOTES").child(FILENAME2).setValue(FILENAME);
+        myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Name").setValue(FILENAME);
         saveFile(FILENAME);
         openFile(FILENAME);
     }
@@ -97,6 +97,8 @@ public class NoteActivity extends AppCompatActivity {
         try {
             OutputStream outputStream = openFileOutput(fileName, 0);
             OutputStreamWriter osw = new OutputStreamWriter(outputStream);
+            String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            database.getReference().child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(mEditText.getText().toString());
             osw.write(mEditText.getText().toString());
             osw.close();
         } catch (Throwable t) {
