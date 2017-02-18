@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
-                numberOfNotes();
+                    numberOfNotes();
                     Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                     intent.putExtra("FILENAME", "Note" + value);
                     startActivity(intent);
@@ -126,19 +126,15 @@ public class MainActivity extends AppCompatActivity {
                     // Failed to read value
                     Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
                 }
+
             });
-        }catch (Exception e){
-            Log.e("EBANAROT",e.toString());
-        }
-        try{
             testValue = Integer.parseInt(value);
-            testValue+=1;
-            value=String.valueOf(testValue);
-            Log.d("Value is: ",value);
-            Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
+            testValue += 1;
+            value = String.valueOf(testValue);
+            Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
             myRef.child("users").child(id).child("amountNotes_").setValue(value);
         }catch (Exception e){
-
+            Log.e("EBANAROT",e.toString());
         }
 
     }
