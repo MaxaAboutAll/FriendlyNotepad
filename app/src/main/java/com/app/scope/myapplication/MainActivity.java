@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     int testValue=0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
-    DatabaseReference noteCount= database.getReference("amountNotes_" );
+    DatabaseReference noteCount= database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,14 +103,14 @@ public class MainActivity extends AppCompatActivity {
                         Snackbar.LENGTH_LONG).show();*/
                 numberOfNotes();
                     Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                    intent.putExtra("FILENAME", "Note" + testValue);
+                    intent.putExtra("FILENAME", "Note" + value);
                     startActivity(intent);
 
             }
         });
     }
     private void numberOfNotes(){
-
+        noteCount.child("suka").setValue("blyat");
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         try {
             noteCount.addValueEventListener(new ValueEventListener() {
@@ -118,11 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
-                    value = dataSnapshot.getValue(String.class);
-                    Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
-                //    testValue=Integer.parseInt(value);
-                    testValue++;
-                    myRef.child("users").child(id).child("amountNotes_").setValue(testValue);
+                    value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
                 }
 
                 @Override
@@ -134,7 +130,16 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.e("EBANAROT",e.toString());
         }
+        try{
+            testValue = Integer.parseInt(value);
+            testValue+=1;
+            value=String.valueOf(testValue);
+            Log.d("Value is: ",value);
+            Toast.makeText(getApplicationContext(),value,Toast.LENGTH_SHORT).show();
+            myRef.child("users").child(id).child("amountNotes_").setValue(value);
+        }catch (Exception e){
 
+        }
 
     }
 
