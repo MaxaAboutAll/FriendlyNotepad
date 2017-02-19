@@ -40,6 +40,7 @@ public class MainActivityInFullApplication extends AppCompatActivity {
             //Проверка на зарегистрированность
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
             }
 
             @Override
