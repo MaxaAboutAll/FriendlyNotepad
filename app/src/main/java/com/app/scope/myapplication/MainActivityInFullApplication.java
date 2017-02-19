@@ -19,31 +19,43 @@ public class MainActivityInFullApplication extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     String id;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_in_full_application);
-        isOnline(this);
+        if(isOnline(this)){
+            isLogged();
+            finish();
+        }
+
+
+
+    }
+    public boolean isLogged(){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             //Проверка на зарегистрированность
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Intent intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
+                intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
                 startActivity(intent);
                 finish();
+                return;
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-                Intent intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
+                intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
+                return;
             }
         });
-
+        return true;
     }
+
     //Проверка на подкючение к интернету
     public boolean isOnline(Context context)
     {
@@ -54,9 +66,8 @@ public class MainActivityInFullApplication extends AppCompatActivity {
         {
             return true;
         }
-        Intent intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
+        intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
         startActivity(intent);
-        finish();
         return false;
     }
 

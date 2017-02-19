@@ -48,23 +48,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        noteCount.child("suka").setValue("blyat");
         //Poluchenie kol-va zapisok
-        noteCount.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
-            }
-
-        });
+        numberOfNotes();
 
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         //-------Set ToolBar------------------------------------
@@ -119,19 +104,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
-                    numberOfNotes();
-                try {
-                    Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                    intent.putExtra("FILENAME", "Note" + value);
-                    startActivity(intent);
-                }catch (Exception e){
+                    fabAction();
 
-                }
 
             }
         });
     }
+    //Vse do fabAction sostovlyaushie
     private void numberOfNotes(){
+        noteCount.child("suka").setValue("blyat");
         try {
             noteCount.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -148,15 +129,32 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             });
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT);
+        }
+
+    }
+
+    private void perehod(){
+        try {
             testValue = Integer.parseInt(value);
             testValue += 1;
             value = String.valueOf(testValue);
             Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
             myRef.child("users").child(id).child("amountNotes_").setValue(value);
         }catch (Exception e){
-            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT);
-        }
 
+        }
+        Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+        intent.putExtra("FILENAME", "Note" + value);
+        for(int i=0;i<10;i++){
+            Toast.makeText(getApplicationContext(),i+"mSecond",Toast.LENGTH_SHORT);
+        }
+        startActivity(intent);
+    }
+    private void fabAction(){
+        numberOfNotes();
+        perehod();
     }
 
     private void setupViewPager(ViewPager viewPager) {
