@@ -25,8 +25,9 @@ public class MainActivityInFullApplication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_in_full_application);
-        if(isOnline(this)){
-            isLogged();
+        if(isOnline(this)&&isLogged()){
+            intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
+            startActivity(intent);
             finish();
         }
 
@@ -38,10 +39,7 @@ public class MainActivityInFullApplication extends AppCompatActivity {
             @Override
             //Проверка на зарегистрированность
             public void onDataChange(DataSnapshot dataSnapshot) {
-                intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-                return;
+
             }
 
             @Override

@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     DatabaseReference noteCount= database.getReference();
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,11 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCancelled(DatabaseError error) {
                     // Failed to read value
+
                     Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
+                    intent = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
             });
@@ -145,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
-        Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+        intent = new Intent(MainActivity.this, NoteActivity.class);
         intent.putExtra("FILENAME", "Note" + value);
         for(int i=0;i<10;i++){
             Toast.makeText(getApplicationContext(),i+"mSecond",Toast.LENGTH_SHORT);
