@@ -48,6 +48,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        noteCount.child("suka").setValue("blyat");
+        //Poluchenie kol-va zapisok
+        noteCount.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
+            }
+
+        });
+
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         //-------Set ToolBar------------------------------------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -102,16 +120,18 @@ public class MainActivity extends AppCompatActivity {
                /* Snackbar.make(v, "Make New Note",
                         Snackbar.LENGTH_LONG).show();*/
                     numberOfNotes();
+                try {
                     Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                     intent.putExtra("FILENAME", "Note" + value);
                     startActivity(intent);
+                }catch (Exception e){
+
+                }
 
             }
         });
     }
     private void numberOfNotes(){
-        noteCount.child("suka").setValue("blyat");
-        id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         try {
             noteCount.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -134,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
             myRef.child("users").child(id).child("amountNotes_").setValue(value);
         }catch (Exception e){
-            Log.e("EBANAROT",e.toString());
+            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT);
         }
 
     }

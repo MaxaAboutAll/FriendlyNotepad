@@ -22,30 +22,34 @@ import java.io.OutputStreamWriter;
 
 public class NoteActivity extends AppCompatActivity {
     //String FILENAME1 = (String)getIntent().getSerializableExtra("FILENAME");
+    String text="";
      // имя файла
     private EditText mEditText;
     String FILENAME= "";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
     String FILENAME2;
-
+    String FILENAME1;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-
+        try {
+        id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         //-------Set ToolBar------------------------------------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_note);
         setSupportActionBar(toolbar);
         mEditText = (EditText) findViewById(R.id.input_note);
-        Intent intent = getIntent();
-        FILENAME2 = intent.getStringExtra("FILENAME");
-        String FILENAME1 = FILENAME2+".txt";
-        FILENAME=FILENAME1;
-        String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        DatabaseReference myRef = database.getReference();
-        myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Name").setValue(FILENAME);
-        saveFile(FILENAME);
-        openFile(FILENAME);
+
+            Intent intent = getIntent();
+            FILENAME2 = intent.getStringExtra("FILENAME");
+            FILENAME1 = FILENAME2 + ".txt";
+            FILENAME = FILENAME1;
+            myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("ID").setValue(FILENAME);
+        }catch (Exception e){
+            Log.e("EXCEPTION:   ",e.toString());
+        }
     }
 
 
@@ -58,11 +62,11 @@ public class NoteActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_open:
+           /* case R.id.action_open:
                 openFile(FILENAME);
-                return true;
+                return true;*/
             case R.id.action_save:
-                saveFile(FILENAME);
+                saveFile();
                 return true;
             default:
                 return true;
@@ -70,7 +74,7 @@ public class NoteActivity extends AppCompatActivity {
     }
 
     // Метод для открытия файла
-    private void openFile(String fileName) {
+  /*  private void openFile(String fileName) {
         try {
             InputStream inputStream = openFileInput(fileName);
 
@@ -91,20 +95,12 @@ public class NoteActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),
                     "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     // Метод для сохранения файла
-    private void saveFile(String fileName) {
-        try {
-            OutputStream outputStream = openFileOutput(fileName, 0);
-            OutputStreamWriter osw = new OutputStreamWriter(outputStream);
-            String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-            database.getReference().child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(mEditText.getText().toString());
-            osw.write(mEditText.getText().toString());
-            osw.close();
-        } catch (Throwable t) {
-            Toast.makeText(getApplicationContext(),
-                    "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
-        }
+    private void saveFile() {
+            text= mEditText.getText().toString();
+            myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(text);
+
     }
 }
