@@ -17,23 +17,9 @@ import com.google.firebase.auth.AuthResult;
 
 public class User {
 
-    String login = "", password = "";
-    public User(String newLogin, String newPassword){
-        login = newLogin;
-        password = newPassword;
+    String id;
 
-
-    }
-    public void signin(String email , String password){
-
-    }
-
-    public void registration(String email , String password){
-
-
-    }
-
-    public void callback(){
-
+    public User(String id) {
+        this.id = id;
     }
 }
