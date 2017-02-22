@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,58 +21,52 @@ public class MainActivityInFullApplication extends AppCompatActivity {
     DatabaseReference myRef = database.getReference();
     String id;
     Intent intent;
+    String value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_in_full_application);
-        if(isOnline(this)&&isLogged()){
-            intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
-            startActivity(intent);
-            finish();
+        id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        Logged();
+    }
+
+    private void Logged(){
+        myRef.child("suka").setValue("blyat");
+        try {
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once with the initial value and again
+// whenever data at this location is updated.
+                    value = dataSnapshot.child("users").child(id).child("status").getValue(String.class);
+                    switch (value){
+                       case "online":
+                           intent = new Intent(MainActivityInFullApplication.this,MainActivity.class);
+                           startActivity(intent);
+                           finish();
+                           break;
+                       default:
+                           intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
+                           startActivity(intent);
+                           finish();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+// Failed to read value
+
+                    intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            });
+        }catch (Exception e){
         }
+
     }
-    public String Login(String mail){
-        char[] nickInMail= mail.toCharArray();
-        String nick= new String(nickInMail);
-        return nick;
-    }
-
-    public boolean isLogged(){
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            //Проверка на зарегистрированность
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        });
-        return true;
-    }
-
-    //Проверка на подкючение к интернету
-    public boolean isOnline(Context context)
-    {
-        ConnectivityManager cm =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting())
-        {
-            return true;
-        }
-        intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
-        startActivity(intent);
-        return false;
-    }
-
 
 }
