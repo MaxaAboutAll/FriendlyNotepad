@@ -30,10 +30,13 @@ public class MainActivityInFullApplication extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-
-
-
     }
+    public String Login(String mail){
+        char[] nickInMail= mail.toCharArray();
+        String nick= new String(nickInMail);
+        return nick;
+    }
+
     public boolean isLogged(){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
