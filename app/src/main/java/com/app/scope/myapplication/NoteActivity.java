@@ -103,4 +103,6 @@ public class NoteActivity extends AppCompatActivity {
             myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(text);
 
     }
+
+
 }
