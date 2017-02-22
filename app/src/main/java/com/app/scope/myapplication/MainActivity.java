@@ -49,32 +49,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Poluchenie kol-va zapisok
+//Poluchenie kol-va zapisok
         numberOfNotes();
 
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
-        //-------Set ToolBar------------------------------------
+//-------Set ToolBar------------------------------------
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //-------Set Navigation Menu----------------------------
-        // Create Navigation drawer and inflate layout
+//-------Set Navigation Menu----------------------------
+// Create Navigation drawer and inflate layout
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.getMenu().getItem(0).setChecked(false);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        //-------Set ViewPager
+//-------Set ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-        //----------------------------
-        // Adding menu icon to Toolbar
+//----------------------------
+// Adding menu icon to Toolbar
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setHomeAsUpIndicator(R.drawable.ic_menu);//Установка картинки гамбургера
             supportActionBar.setDisplayHomeAsUpEnabled(true);//Возварат на уровень выше
         }
 
-        // Set behavior of Navigation drawer
+// Set behavior of Navigation drawer
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     // This method will trigger on item Click of navigation menu
@@ -88,26 +88,23 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                         }
-                        // Set item in checked state
+// Set item in checked state
                         menuItem.setChecked(true);
-                        // Closing drawer on item click
+// Closing drawer on item click
                         mDrawerLayout.closeDrawers();
                         return true;
                     }
 
-
                 });
 
-        //-------Set FAB-------------
+//-------Set FAB-------------
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Snackbar.make(v, "Make New Note",
-                        Snackbar.LENGTH_LONG).show();*/
-                    fabAction();
-
-
+/* Snackbar.make(v, "Make New Note",
+Snackbar.LENGTH_LONG).show();*/
+                fabAction();
 
             }
         });
@@ -119,14 +116,14 @@ public class MainActivity extends AppCompatActivity {
             noteCount.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
+// This method is called once with the initial value and again
+// whenever data at this location is updated.
                     value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
                 }
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-                    // Failed to read value
+// Failed to read value
 
                     Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
                     intent = new Intent(MainActivity.this,LoginActivity.class);
@@ -200,17 +197,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+// Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    //---Открытие меню по нажаию на гамбургер
+//---Открытие меню по нажаию на гамбургер
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
+//noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         } else if (id == android.R.id.home) {

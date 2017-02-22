@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -22,10 +23,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
+    String nick;
+    DatabaseReference myRef;
+    String id;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-
+    int i=0;
     private EditText ETemail;
     private EditText ETpassword;
 
@@ -33,8 +36,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         mAuth = FirebaseAuth.getInstance();
+        myRef = database.getReference();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -53,8 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         ETemail = (EditText) findViewById(R.id.LoginEditText);
         ETpassword = (EditText) findViewById(R.id.PasswordEditText);
-        LoginActivity login = new LoginActivity();
-        User user = new User(ETemail.getText().toString(),ETpassword.getText().toString());
 
         findViewById(R.id.LoginBtn).setOnClickListener(this);
         findViewById(R.id.RegBtn).setOnClickListener(this);
@@ -83,8 +85,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     Snackbar.make(findViewById(R.id.LoginBtn), "Автоизация успешна", Snackbar.LENGTH_SHORT).show();
-                    String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//vzyat' id polzovatelya
-                    DatabaseReference myRef = database.getReference();//Отправить в базу id
                     myRef.child("users").child(id).child("status").setValue("online");//Отправить в базу статус
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
@@ -95,16 +95,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    public void registration (String email , String password){
+    public void registration (final String email , String password){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful())
                 {
                     Snackbar.make(findViewById(R.id.RegBtn), "Регистрация успешна", Snackbar.LENGTH_SHORT).show();
-                    String id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//vzyat' id polzovatelya
-                    DatabaseReference myRef = database.getReference();//Отправить в базу id
-                    myRef.child("users").child(id).child("status").setValue("online");
+                    id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);//vzyat' id polzovatelya
+                    try {
+                        myRef.child("users").child(id).child("status").setValue("online");
+                        myRef.child("users").child(id).child("amountNotes_").setValue("0");
+                        nick = Login(email);
+                        myRef.child("users").child(id).child("NickName").setValue(nick);
+                    }catch (Exception e){
+                        Log.e("EXCEPTION!!!!!!",e.toString());
+                    }
                     Intent intent = new Intent(LoginActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -114,4 +120,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
     }
+    public String Login(String email){
+        char[] nickWithEmail = email.toCharArray();
+        while(nickWithEmail[i]!='@'){
+            i++;
+        }
+        char[] nickWithoutEmail = new char[i];
+        i=0;
+        for(;i<nickWithoutEmail.length;i++){
+            nickWithoutEmail[i]=nickWithEmail[i];
+        }
+        String Nick = new String(nickWithoutEmail);
+        return Nick;
+    }
+
 }
