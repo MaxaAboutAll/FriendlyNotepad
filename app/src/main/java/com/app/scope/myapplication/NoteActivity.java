@@ -101,7 +101,9 @@ public class NoteActivity extends AppCompatActivity {
     private void saveFile() {
             text= mEditText.getText().toString();
             myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(text);
-
+            Intent intent = new Intent(NoteActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
     }
 
 

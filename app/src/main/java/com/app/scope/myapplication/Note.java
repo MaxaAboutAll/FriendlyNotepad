@@ -2,28 +2,11 @@ package com.app.scope.myapplication;
 
 public class Note {
 
-    public Note(User user){
-    //request about notes to user
+    String name;
+    String text;
 
-    }
-
-    public String noteID;
-    public String title;
-    public String text;
-
-    public void createNote(){
-
-    }
-
-    public void readNote(){
-
-    }
-
-    public void updateNote(){
-
-    }
-
-    public void deleteNote(){
-
+    public Note(String name, String text) {
+        this.name = name;
+        this.text = text;
     }
 }

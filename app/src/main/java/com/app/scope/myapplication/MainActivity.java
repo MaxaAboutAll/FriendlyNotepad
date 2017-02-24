@@ -14,6 +14,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference();
     DatabaseReference noteCount= database.getReference();
     Intent intent;
+    ListContentFragment preview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(false);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
+        //--------------------
+
+        Log.i("Test value is", String.valueOf(testValue));
+        Bundle bundle = new Bundle();
+        bundle.putString("count", String.valueOf(10));
+        ListContentFragment fragInfo = new ListContentFragment();
+        fragInfo.setArguments(bundle);
 
 //-------Set ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -109,6 +120,8 @@ Snackbar.LENGTH_LONG).show();*/
             }
         });
     }
+
+
     //Vse do fabAction sostovlyaushie
     private void numberOfNotes(){
         noteCount.child("suka").setValue("blyat");
@@ -116,15 +129,14 @@ Snackbar.LENGTH_LONG).show();*/
             noteCount.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-// This method is called once with the initial value and again
-// whenever data at this location is updated.
+    // This method is called once with the initial value and again
+            // whenever data at this location is updated.
                     value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
                 }
 
                 @Override
                 public void onCancelled(DatabaseError error) {
 // Failed to read value
-
                     Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
                     intent = new Intent(MainActivity.this,LoginActivity.class);
                     startActivity(intent);
@@ -214,5 +226,9 @@ Snackbar.LENGTH_LONG).show();*/
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getMyData() {
+        return value;
     }
 }
