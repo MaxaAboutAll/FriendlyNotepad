@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference();
     DatabaseReference noteCount= database.getReference();
     Intent intent;
+    ListContentFragment preview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(false);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-
+        preview.createArray(id,testValue);
 //-------Set ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
