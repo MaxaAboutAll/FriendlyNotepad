@@ -29,6 +29,12 @@ public class MainActivityInFullApplication extends AppCompatActivity {
         setContentView(R.layout.activity_main_in_full_application);
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         Logged();
+        try{
+            Thread.sleep(2100);
+        }catch (Exception e){
+
+        }
+        finish();
     }
 
     private void Logged(){

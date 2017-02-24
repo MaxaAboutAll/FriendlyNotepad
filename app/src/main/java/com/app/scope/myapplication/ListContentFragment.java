@@ -16,11 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,12 +28,10 @@ import java.util.Map;
  */
 public class ListContentFragment extends Fragment {
 
-    String value;
     ArrayList<HashMap<String,Object>> data;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     String id;
-    int count;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,9 +67,8 @@ public class ListContentFragment extends Fragment {
         }
     }
 
-    public void createArray(String id, int count){
-        this.id=id;
-        this.count=count;
+    public void createArray(){
+
 
     }
     /**
