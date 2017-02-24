@@ -139,6 +139,7 @@ public class ListContentFragment extends Fragment {
                         Log.e("Exception is", e.toString());
                     }
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
