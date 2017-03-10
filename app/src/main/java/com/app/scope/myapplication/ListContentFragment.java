@@ -47,18 +47,29 @@ public class ListContentFragment extends Fragment {
                 R.layout.recycler_view, container, false);
         int myDataFromActivity = 0;
         myRef = database.getReference();
+        try{
+
+        }catch (Exception e){
+            Log.e("Exception is ", e.toString());
+        }
 
         MainActivity activity = (MainActivity) getActivity();
-        try {
-            myDataFromActivity = Integer.valueOf(activity.getMyData());
+        try{
+            COUNT = Integer.valueOf(activity.getMyData());
         }catch (Exception e){
-            Log.e("Exception is", e.toString());
+            Log.e("Exception is ", e.toString());
         }
+
+        String[] Name;
+        String[] Text;
+
         COUNT = myDataFromActivity;
 
-        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext(),COUNT, ID, myRef);
+        Name = activity.getMyName();
+        Text = activity.getMyText();
 
-        Log.i("Count is 1", String.valueOf(COUNT));
+        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext(),ID,Name.length, Name, Text);
+
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -94,20 +105,41 @@ public class ListContentFragment extends Fragment {
     public static class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
         // Set numbers of List in RecyclerView.
         public static int LENGTH;
-        public String Name[];
-        public String Text[];
+        String ID;
+        private String Name[];
+        private String Text[];
         DatabaseReference myRef;
 
-        public ContentAdapter(Context context, final int count, final String id, DatabaseReference myRef) {
+        public ContentAdapter(Context context, final String ID, int count, String[] Name, String[] Text) {
             LENGTH = count;
-            this.myRef = myRef;
+            this.Name = Name;
+            this.Text = Text;
+           // this.ID = ID;
 
+        /*   ValueEventListener postListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    try {
+                        // Get Post object and use the values to update the UI
+                        Name[0] = dataSnapshot.child("users").child(ID).child("NOTES").child("Note1").child("ID").getValue(String.class);
+                        Text[0] = dataSnapshot.child("users").child(ID).child("NOTES").child("Note1").child("Text").getValue(String.class);
+                    }catch (Exception e){
+                        Log.e("Exception is ", e.toString());
+                    }
+                    // ...
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+            try {
+            }catch (Exception e){
+                Log.e("Efqrwrq is ", e.toString());
+            }
+        }*/
         }
-
-
-
-
-
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -120,38 +152,8 @@ public class ListContentFragment extends Fragment {
             //Toast.makeText(this, "index is"+String.valueOf(position), Toast.LENGTH_SHORT).show();
             Log.i("123","321");
 
-
-            Name = new String[LENGTH];
-            Text = new String[LENGTH];
-            myRef.child(" ").setValue(" ");
-
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    try {
-                        Log.i("I am here", "on Data Change");
-                        // for (int i = 0; i < count; i++) {
-                        Name[0] = "qwe"; //dataSnapshot.child("users").child(id).child("NOTES").child("Note1").getValue(String.class);
-                        Text[0] = "qwesad"; //dataSnapshot.child("users").child(id).child("NOTES").child("Note1").child("Text").getValue(String.class);
-                        //}
-                        Log.i("Data is", "Name is " + Name[0] + "Text is " + Text[0]);
-                    } catch (Exception e) {
-                        Log.e("Exception is", e.toString());
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-            Random random = new Random();
-            for(int i =0;i<LENGTH;i++){
-                for(int j =0;j<20;j++) {
-                    Name[i] +=((char) ('a' + random.nextInt(25)));
-                    Text[i]+= ((char)('a'+random.nextInt(25)));
-                }
-            }
+          /*Name = new String[LENGTH];
+            Text = new String[LENGTH];*/
 
             Log.i("position is", String.valueOf(position));
             Log.i("Data on Bind is ", "Name is " + Name[0] + " Text is " + Text[0]);

@@ -62,8 +62,7 @@ public class MainActivityInFullApplication extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError error) {
-// Failed to read value
-
+                // Failed to read value
                     intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
                     startActivity(intent);
                     finish();

@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,17 +37,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     String id;
-    String value;
+    String value = "";
     int testValue=0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     DatabaseReference noteCount= database.getReference();
     Intent intent;
     ListContentFragment preview;
+    String[] Name;
+    String[] Text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //Poluchenie kol-va zapisok
         numberOfNotes();
+        try{
+            Thread.sleep(2100);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+       // perehod();
+        Log.i("Value is ", String.valueOf(testValue));
+        Name = new String[3];
+        Text = new String[3];
+        getData();
 
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 //-------Set ToolBar------------------------------------
@@ -68,11 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
         //--------------------
 
-        Log.i("Test value is", String.valueOf(testValue));
-        Bundle bundle = new Bundle();
-        bundle.putString("count", String.valueOf(10));
-        ListContentFragment fragInfo = new ListContentFragment();
-        fragInfo.setArguments(bundle);
 
 //-------Set ViewPager
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -113,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/* Snackbar.make(v, "Make New Note",
-Snackbar.LENGTH_LONG).show();*/
+                /* Snackbar.make(v, "Make New Note",
+                Snackbar.LENGTH_LONG).show();*/
                 fabAction();
 
             }
@@ -122,8 +131,37 @@ Snackbar.LENGTH_LONG).show();*/
     }
 
 
+    public void getData(){
+        myRef.child("suka").setValue("blyat");
+        try {
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+// This method is called once with the initial value and again
+// whenever data at this location is updated.
+                    for(int i=0;i<Name.length;i++) {
+                        Name[i] = dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("ID").getValue(String.class);
+                        Text[i] = dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("Text").getValue(String.class);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    //intent = new Intent(MainActivityInFullApplication.this,LoginActivity.class);
+                    //startActivity(intent);
+                    //finish();
+                }
+
+            });
+        }catch (Exception e){
+            Log.e("Exception is ", e.toString());
+        }
+    }
+
     //Vse do fabAction sostovlyaushie
     private void numberOfNotes(){
+
         noteCount.child("suka").setValue("blyat");
         try {
             noteCount.addValueEventListener(new ValueEventListener() {
@@ -132,6 +170,7 @@ Snackbar.LENGTH_LONG).show();*/
     // This method is called once with the initial value and again
             // whenever data at this location is updated.
                     value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
+
                 }
 
                 @Override
@@ -151,12 +190,13 @@ Snackbar.LENGTH_LONG).show();*/
     }
 
     private void perehod(){
+        Log.i("Value in perehod ", value);
         try {
             testValue = Integer.parseInt(value);
             testValue += 1;
             value = String.valueOf(testValue);
             Toast.makeText(getApplicationContext(), value, Toast.LENGTH_SHORT).show();
-            myRef.child("users").child(id).child("amountNotes_").setValue(value);
+           myRef.child("users").child(id).child("amountNotes_").setValue(value);
         }catch (Exception e){
 
         }
@@ -228,7 +268,13 @@ Snackbar.LENGTH_LONG).show();*/
         return super.onOptionsItemSelected(item);
     }
 
-    public String getMyData() {
+    public String[] getMyText() {
+        return Text;
+    }
+    public String[] getMyName(){
+        return Name;
+    }
+    public String getMyData(){
         return value;
     }
 }
