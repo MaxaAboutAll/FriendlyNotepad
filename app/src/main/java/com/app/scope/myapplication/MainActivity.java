@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference();
     DatabaseReference noteCount= database.getReference();
     Intent intent;
+    int firstValue;
     ListContentFragment preview;
     ArrayList<String> Name;
     ArrayList<String> Text;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Value is ", String.valueOf(testValue));
         Name = new ArrayList<>();
         Text = new ArrayList<>();
+
         getData();
 
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 // This method is called once with the initial value and again
 // whenever data at this location is updated.
-                    for(int i=0;i<2147483646;i++) {
+                    for(int i=0;i<firstValue;i++) {
                         Name.add(dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("ID").getValue(String.class));
                         Text.add(dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("Text").getValue(String.class));
                     }
@@ -170,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     // This method is called once with the initial value and again
             // whenever data at this location is updated.
                     value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
-
+                    firstValue = Integer.parseInt(value);
                 }
 
                 @Override
