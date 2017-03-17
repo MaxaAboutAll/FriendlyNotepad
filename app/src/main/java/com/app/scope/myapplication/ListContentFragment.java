@@ -60,15 +60,15 @@ public class ListContentFragment extends Fragment {
             Log.e("Exception is ", e.toString());
         }
 
-        String[] Name;
-        String[] Text;
+        ArrayList<String> Name;
+        ArrayList<String> Text;
 
         COUNT = myDataFromActivity;
 
         Name = activity.getMyName();
         Text = activity.getMyText();
 
-        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext(),ID,Name.length, Name, Text);
+        ContentAdapter adapter = new ContentAdapter(recyclerView.getContext(),ID,Name.size(), Name, Text);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -106,11 +106,11 @@ public class ListContentFragment extends Fragment {
         // Set numbers of List in RecyclerView.
         public static int LENGTH;
         String ID;
-        private String Name[];
-        private String Text[];
+        private ArrayList<String> Name;
+        private ArrayList<String> Text;
         DatabaseReference myRef;
 
-        public ContentAdapter(Context context, final String ID, int count, String[] Name, String[] Text) {
+        public ContentAdapter(Context context, final String ID, int count, ArrayList<String> Name, ArrayList<String> Text) {
             LENGTH = count;
             this.Name = Name;
             this.Text = Text;
@@ -156,9 +156,8 @@ public class ListContentFragment extends Fragment {
             Text = new String[LENGTH];*/
 
             Log.i("position is", String.valueOf(position));
-            Log.i("Data on Bind is ", "Name is " + Name[0] + " Text is " + Text[0]);
-            holder.name.setText(Name[position]);
-            holder.text.setText(Text[position]);
+            holder.name.setText(Name.get(position));
+            holder.text.setText(Text.get(position));
         }
 
         @Override

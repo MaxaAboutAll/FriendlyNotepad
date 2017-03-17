@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference noteCount= database.getReference();
     Intent intent;
     ListContentFragment preview;
-    String[] Name;
-    String[] Text;
+    ArrayList<String> Name;
+    ArrayList<String> Text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         }
        // perehod();
         Log.i("Value is ", String.valueOf(testValue));
-        Name = new String[3];
-        Text = new String[3];
+        Name = new ArrayList<>();
+        Text = new ArrayList<>();
         getData();
 
         id = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -139,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
 // This method is called once with the initial value and again
 // whenever data at this location is updated.
-                    for(int i=0;i<Name.length;i++) {
-                        Name[i] = dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("ID").getValue(String.class);
-                        Text[i] = dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("Text").getValue(String.class);
+                    for(int i=0;i<20;i++) {
+                        Name.add(dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("ID").getValue(String.class));
+                        Text.add(dataSnapshot.child("users").child(id).child("NOTES").child("Note"+(i+1)).child("Text").getValue(String.class));
                     }
                 }
 
@@ -268,10 +268,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String[] getMyText() {
+    public ArrayList<String> getMyText() {
         return Text;
     }
-    public String[] getMyName(){
+    public ArrayList<String> getMyName(){
         return Name;
     }
     public String getMyData(){
