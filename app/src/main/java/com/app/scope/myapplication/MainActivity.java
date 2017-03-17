@@ -164,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
 
     //Vse do fabAction sostovlyaushie
     private void numberOfNotes(){
-        if(check) {
             noteCount.child("suka").setValue("blyat");
             try {
                 noteCount.addValueEventListener(new ValueEventListener() {
@@ -174,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
                         // whenever data at this location is updated.
                         value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
                         firstValue = Integer.parseInt(value);
-                        check=false;
                     }
 
                     @Override
@@ -190,12 +188,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
             }
-        }
-        check=true;
     }
 
     private void perehod(){
-        Log.i("Value in perehod ", value);
         try {
             testValue = Integer.parseInt(value);
             testValue += 1;
@@ -207,9 +202,6 @@ public class MainActivity extends AppCompatActivity {
         }
         intent = new Intent(MainActivity.this, NoteActivity.class);
         intent.putExtra("FILENAME", "Note" + value);
-        for(int i=0;i<10;i++){
-            Toast.makeText(getApplicationContext(),i+"mSecond",Toast.LENGTH_SHORT);
-        }
         startActivity(intent);
     }
     private void fabAction(){
@@ -281,5 +273,13 @@ public class MainActivity extends AppCompatActivity {
     }
     public String getMyData(){
         return value;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
     }
 }

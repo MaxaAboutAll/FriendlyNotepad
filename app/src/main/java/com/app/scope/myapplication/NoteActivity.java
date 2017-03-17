@@ -102,11 +102,8 @@ public class NoteActivity extends AppCompatActivity {
         try {
             text = mEditText.getText().toString();
             myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(text);
-            Intent intent = new Intent(NoteActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
         }catch(Exception e){
-
+            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
         }
     }
 
