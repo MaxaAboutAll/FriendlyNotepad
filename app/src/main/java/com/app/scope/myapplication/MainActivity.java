@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference noteCount= database.getReference();
     Intent intent;
     int firstValue;
+    boolean check=true;
     ListContentFragment preview;
     ArrayList<String> Name;
     ArrayList<String> Text;
@@ -163,32 +164,34 @@ public class MainActivity extends AppCompatActivity {
 
     //Vse do fabAction sostovlyaushie
     private void numberOfNotes(){
+        if(check) {
+            noteCount.child("suka").setValue("blyat");
+            try {
+                noteCount.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
+                        firstValue = Integer.parseInt(value);
+                        check=false;
+                    }
 
-        noteCount.child("suka").setValue("blyat");
-        try {
-            noteCount.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-    // This method is called once with the initial value and again
-            // whenever data at this location is updated.
-                    value = dataSnapshot.child("users").child(id).child("amountNotes_").getValue(String.class);
-                    firstValue = Integer.parseInt(value);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
+                    @Override
+                    public void onCancelled(DatabaseError error) {
 // Failed to read value
-                    Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
-                    intent = new Intent(MainActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                        Toast.makeText(getApplicationContext(), "SUSKA", Toast.LENGTH_LONG).show();
+                        intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
 
-            });
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT);
+                });
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT);
+            }
         }
-
+        check=true;
     }
 
     private void perehod(){

@@ -99,11 +99,15 @@ public class NoteActivity extends AppCompatActivity {
 
     // Метод для сохранения файла
     private void saveFile() {
-            text= mEditText.getText().toString();
+        try {
+            text = mEditText.getText().toString();
             myRef.child("users").child(id).child("NOTES").child(FILENAME2).child("Text").setValue(text);
             Intent intent = new Intent(NoteActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
+        }catch(Exception e){
+
+        }
     }
 
 
